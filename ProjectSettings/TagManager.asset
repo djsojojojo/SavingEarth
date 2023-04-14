@@ -5,6 +5,19 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - TrackingObject
+  - Actors
+  - Sun
+  - Mercury
+  - Venus
+  - Earth
+  - Mars
+  - Jupiter
+  - Saturn
+  - Uranus
+  - Neptune
+  - Pluto
+  - EarthMoon
   layers:
   - Default
   - TransparentFX

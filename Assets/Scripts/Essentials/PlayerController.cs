@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player Movement Variables")]
     // Variables
-    [Range(0.1f, 30f)] // Range makes slider to next variable
+    [Range(0.1f, 300f)] // Range makes slider to next variable
     public float playerSpeed = 10f;
 
     [Header("Shooting Variables")]
