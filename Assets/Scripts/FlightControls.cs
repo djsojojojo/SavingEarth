@@ -5,20 +5,17 @@ using UnityEngine;
 public class FlightControls : MonoBehaviour
 {
     [Header("Plane Stats")]
-    [Tooltip("How much throttle ramps up and down.")]
     public float throtteleIncrement = 0.1f;
-    [Tooltip("Maximum engine throttle")]
     public float maxThrust = 200f;
-    [Tooltip("How responsive the plane is when rolling, pitching and yawing.")]
     public float responsiveness = 10f;
     public float rollResponse = 1f;
     public float pitchResponse = 1f;
     public float yawResponse = 1f;
-
     public float throttle;
     public float roll;
     public float pitch;
     public float yaw;
+    Rigidbody rb;
 
     public float responseModifier
     {
@@ -29,7 +26,7 @@ public class FlightControls : MonoBehaviour
 
 
     }
-    Rigidbody rb;
+
 
     private void Awake()
     {
@@ -55,7 +52,7 @@ public class FlightControls : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Apply forces to our plane
+        // Apply forces to spaceship
         rb.AddForce(transform.forward * maxThrust * throttle);
         rb.AddTorque(transform.up * yaw * responseModifier * yawResponse);
         rb.AddTorque(transform.right * pitch * responseModifier * pitchResponse);
