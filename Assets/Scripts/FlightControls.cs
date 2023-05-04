@@ -4,7 +4,21 @@ using UnityEngine;
 
 public class FlightControls : MonoBehaviour
 {
-    [Header("Plane Stats")]
+    [Header("GameMode")]
+    public bool twinStick = false;
+    public bool mouseAim = true;
+    public bool classic = false;
+
+    [Header("Shooting Variables")]
+    public GameObject weapon1;
+    public GameObject weapon2;
+    public Transform gun;
+    public float firerate = 0.5f; // s‰‰t‰‰ ampumisnopeutta
+    public bool canFire = true;
+    public int missiles = 4;
+
+
+    [Header("Flight control variables")]
     public float throtteleIncrement = 0.1f;
     public float maxThrust = 200f;
     public float responsiveness = 10f;
@@ -16,6 +30,24 @@ public class FlightControls : MonoBehaviour
     public float pitch;
     public float yaw;
     Rigidbody rb;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        if (twinStick == true)
+        {
+            gun.GetComponent<twinStickAim>().enabled = true;
+            gun.GetComponent<GunScript2>().enabled = false;
+        }
+        else if (classic == true)
+        {
+            gun.GetComponent<twinStickAim>().enabled = false;
+            gun.GetComponent<GunScript2>().enabled = false;
+        }
+    }
+
+
+
 
     public float responseModifier
     {
@@ -48,6 +80,14 @@ public class FlightControls : MonoBehaviour
     private void Update()
     {
         HandleInputs();
+        if (!twinStick && Input.GetButton("Fire1") && canFire)
+        {
+            StartCoroutine("Shoot");
+        }
+        if (!twinStick && Input.GetButton("Fire3") && canFire && missiles >=1)
+        {
+            StartCoroutine("Shoot2");
+        }
     }
 
     private void FixedUpdate()
@@ -60,4 +100,23 @@ public class FlightControls : MonoBehaviour
     }
 
 
+    public IEnumerator Shoot()
+    {
+        // print("Shoot"); // Prints shoot when fire1 is pressed
+        //Instantiate(bullet, transform.position, transform.rotation); // t‰ll‰ pelaajan sijaintiin
+        Instantiate(weapon1, gun.position, gun.rotation); //T‰ll‰ aseen sijaintiin
+        canFire = false; // ei anna ampua
+        yield return new WaitForSeconds(firerate); //odottaa hetken
+        canFire = true; // antaa ampua
+    }
+    public IEnumerator Shoot2()
+    {
+        // print("Shoot"); // Prints shoot when fire1 is pressed
+        //Instantiate(bullet, transform.position, transform.rotation); // t‰ll‰ pelaajan sijaintiin
+        Instantiate(weapon2, gun.position, gun.rotation); //T‰ll‰ aseen sijaintiin
+        missiles -= 1;
+        canFire = false; // ei anna ampua
+        yield return new WaitForSeconds(firerate); //odottaa hetken
+        canFire = true; // antaa ampua
+    }
 }
