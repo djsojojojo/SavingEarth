@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController1 : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     [SerializeField] Transform[] cameraTargets;
-    [SerializeField] float speed;
+    [SerializeField] public float speed;
 
     private int index = 0;
     private Vector3 target;
@@ -18,11 +18,12 @@ public class CameraController1 : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha4)) index = 3;
 
         target = cameraTargets[index].position;
+        transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * speed);
+        transform.forward = cameraTargets[index].forward;
     }
 
     private void FixedUpdate()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * speed);
-        transform.forward = cameraTargets[index].forward;
+
     }
 }

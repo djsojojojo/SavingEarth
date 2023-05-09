@@ -6,7 +6,7 @@ public class RadarScript : MonoBehaviour
 {
 
     public Transform target;
-    public float offset = 50f;
+    public float offset = 5f;
     public Transform enemy;
     public GameObject radarPoint;
 
@@ -22,5 +22,6 @@ public class RadarScript : MonoBehaviour
         transform.position = new Vector3(target.position.x, target.position.y+offset, target.position.z);
         Vector3 targetposition = new Vector3(target.position.x, target.position.y, target.position.z);
         radarPoint.transform.LookAt(targetposition);
+        
     }
 }

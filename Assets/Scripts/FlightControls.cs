@@ -31,6 +31,14 @@ public class FlightControls : MonoBehaviour
     public float yaw;
     Rigidbody rb;
 
+    [Header("Effects")]
+    public GameObject[] trails;
+
+    [Header("Camera")]
+    public CameraController cameraScript;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -76,10 +84,12 @@ public class FlightControls : MonoBehaviour
         if (Input.GetKey(KeyCode.Space)) throttle += throtteleIncrement;
         else if (Input.GetKey(KeyCode.LeftControl)) throttle -= throtteleIncrement;
         throttle = Mathf.Clamp(throttle, 0f, 100f);
+        cameraScript.speed = throttle * -1.2f;
     }
     private void Update()
     {
         HandleInputs();
+
         if (!twinStick && Input.GetButton("Fire1") && canFire)
         {
             StartCoroutine("Shoot");
@@ -88,10 +98,21 @@ public class FlightControls : MonoBehaviour
         {
             StartCoroutine("Shoot2");
         }
+        if (throttle <=9)
+        {
+            trails[0].SetActive(false);
+            trails[1].SetActive(false);
+        }
+        else if (throttle >9)
+        {
+            trails[0].SetActive(true);
+            trails[1].SetActive(true);
+        }
     }
 
     private void FixedUpdate()
     {
+
         // Apply forces to spaceship
         rb.AddForce(transform.forward * maxThrust * throttle);
         rb.AddTorque(transform.up * yaw * responseModifier * yawResponse);
