@@ -32,8 +32,9 @@ public class FlightControls : MonoBehaviour
     Rigidbody rb;
 
     [Header("Effects")]
-    public GameObject[] trails;
-
+    //public GameObject[] trails;
+    public GameObject[]  thrusters;
+   
     [Header("Camera")]
     public CameraController cameraScript;
 
@@ -81,10 +82,10 @@ public class FlightControls : MonoBehaviour
         yaw = Input.GetAxis("Yaw");
 
         // Handle throttle value being sure to clamp it between 0 and 100
-        if (Input.GetKey(KeyCode.Space)) throttle += throtteleIncrement;
-        else if (Input.GetKey(KeyCode.LeftControl)) throttle -= throtteleIncrement;
+        if (Input.GetButton("Throttle+")) throttle += throtteleIncrement;
+        else if (Input.GetButton("Throttle-")) throttle -= throtteleIncrement;
         throttle = Mathf.Clamp(throttle, 0f, 100f);
-        cameraScript.speed = throttle * -1.2f;
+       // cameraScript.speed = throttle * -1.2f;
     }
     private void Update()
     {
@@ -98,7 +99,13 @@ public class FlightControls : MonoBehaviour
         {
             StartCoroutine("Shoot2");
         }
-        if (throttle <=9)
+        /*if (throttle > 0)
+        {
+            thrusters[0].SetActive(true);
+        }
+        else if (throttle <= 0)
+            thrusters[0].SetActive(false);
+        /* if (throttle <=9)
         {
             trails[0].SetActive(false);
             trails[1].SetActive(false);
@@ -107,7 +114,7 @@ public class FlightControls : MonoBehaviour
         {
             trails[0].SetActive(true);
             trails[1].SetActive(true);
-        }
+        }*/
     }
 
     private void FixedUpdate()

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class SpeedParticleController : MonoBehaviour
 {
-    [SerializeField] Transform[] cameraTargets;
+    [SerializeField] Transform[] particleTargets;
     [SerializeField] public float speed;
 
     private int index = 0;
@@ -22,9 +22,9 @@ public class CameraController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        target = cameraTargets[index].position;
+        target = particleTargets[index].position;
         transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * speed);
-        transform.forward = cameraTargets[index].forward;
+        transform.forward = particleTargets[index].forward;
 
 
     }
