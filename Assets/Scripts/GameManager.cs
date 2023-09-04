@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public int score = 0;
+    public GameObject[] asteroid;
+    public GameObject earth;
 
     public static GameManager gameManager;
 
@@ -28,8 +30,15 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        earth = GameObject.Find("Earth");
     }
-    
+    public void SpawnAsteroid()
+    {
+        int rnd = Random.Range(0, 4);
+        Instantiate(asteroid[rnd], new Vector3(
+            earth.transform.position.x,
+            earth.transform.position.y + 8,
+            earth.transform.position.z), earth.transform.rotation);
+    }
 
 }
